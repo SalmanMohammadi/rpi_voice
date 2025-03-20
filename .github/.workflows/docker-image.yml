@@ -1,0 +1,43 @@
+name: Docker Image CI
+
+permissions:
+  contents: read
+  packages: write
+  
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+        
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          platforms: linux/arm64
+          tags: ghcr.io/salmanmohammadi/whisper:latest
+          args:
+            OPENBLAS_VERSION: 0.3.29
+            WHISPER_VERSION: 1.7.4
+            BUSYBOX_VERSION: snapshot

@@ -1,0 +1,11 @@
+version: '1'
+services:
+  whisper:
+    container_name: whisper
+    restart: always
+    image: ghcr.io/salmanmohammadi/whisper:latest
+    network_mode: host
+    volumes:
+      - /usr/share/alsa:/usr/share/alsa
+      - /etc/asound.conf:/etc/asound.conf
+      - /run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
