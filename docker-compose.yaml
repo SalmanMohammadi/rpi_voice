@@ -1,11 +1,18 @@
-version: '1'
+# cat docker-compose.yaml
 services:
   whisper:
+    devices:
+      - /dev/snd:/dev/snd
     container_name: whisper
     restart: always
     image: ghcr.io/salmanmohammadi/whisper:latest
     network_mode: host
+    environment:
+      - AUDIODEV=plughw:0,0
+    group_add:
+      - audio
     volumes:
       - /usr/share/alsa:/usr/share/alsa
       - /etc/asound.conf:/etc/asound.conf
       - /run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+      

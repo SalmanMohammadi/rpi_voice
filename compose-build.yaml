@@ -1,0 +1,9 @@
+services:
+  whisper:
+    build:
+      context: .
+      args:
+        OPENBLAS_VERSION: 0.3.29
+        WHISPER_VERSION: 1.7.4
+        BUSYBOX_VERSION: snapshot
+    image: ghcr.io/salmanmohammadi/whisper:latest
