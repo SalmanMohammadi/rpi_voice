@@ -37,7 +37,7 @@ jobs:
           push: true
           platforms: linux/arm64
           tags: ghcr.io/salmanmohammadi/whisper:latest
-          args:
-            OPENBLAS_VERSION: 0.3.29
-            WHISPER_VERSION: 1.7.4
-            BUSYBOX_VERSION: snapshot
+          build-args: |
+            OPENBLAS_VERSION=0.3.29
+            WHISPER_VERSION=1.7.4
+            BUSYBOX_VERSION=snapshot
